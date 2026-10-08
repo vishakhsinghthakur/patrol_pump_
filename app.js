@@ -191,16 +191,16 @@
     setTimeout(() => { state.step = 'verified'; render(); }, 1100);
   }
 
-  function runFuelling() {
-    const total = targetAmount();
-    const litres = targetLitres();
-    const start = performance.now();
-    const duration = 5200;
+function runFuelling() {
+  const total = targetAmount();
+  const totalLitres = targetLitres();
+  const start = performance.now();
+  const duration = 8000;
     function tick(now) {
       if (state.step !== 'fuelling') return;
       const pct = Math.min(1,(now-start)/duration);
       const eased = 1 - Math.pow(1-pct,3);
-      const a = total * eased, l = litres * eased;
+    const a = total * eased, l = totalLitres * eased;
       const amountEl = document.querySelector('#liveAmount');
       const litreEl = document.querySelector('#liveLitres');
       const bar = document.querySelector('#fuelBar');
@@ -208,7 +208,7 @@
       if (litreEl) litreEl.textContent = litres(l);
       if (bar) bar.style.setProperty('--progress',`${eased*100}%`);
       if (pct < 1) requestAnimationFrame(tick);
-      else setTimeout(() => { if (state.step === 'fuelling') { state.step='complete'; render(); } },700);
+    else setTimeout(() => { if (state.step === 'fuelling') { state.step='complete'; render(); } },1000);
     }
     requestAnimationFrame(tick);
   }
